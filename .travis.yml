@@ -22,3 +22,5 @@ after_success:
   - docker push umadev2022/multi-nginx
   - docker push umadev2022/multi-server
   - docker push umadev2022/multi-worker
+
+  
