@@ -12,4 +12,10 @@ script:
   - docker build -t umadev2022/multi-nginx ./nginx
   - docker build -t umadev2022/multi-server ./server
   - docker build -t umadev2022/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push umadev2022/multi-client
+  - docker push umadev2022/multi-nginx
+  - docker push umadev2022/multi-server
+  - docker push umadev2022/multi-worker
 
