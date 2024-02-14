@@ -1,21 +1,24 @@
 sudo: required
+language: generic
+
 services:
   - docker
 
 before_install:
-  -docker build -t umadev2022/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t umadev2022/react-test -f ./client/Dockerfile.dev ./client
 
 script:
- - docker run -e CI=tru umadev2022/react-test npm test
- after_success:
+  - docker run -e CI=true umadev2022/react-test npm test
+
+after_success:
   - docker build -t umadev2022/multi-client ./client
   - docker build -t umadev2022/multi-nginx ./nginx
   - docker build -t umadev2022/multi-server ./server
   - docker build -t umadev2022/multi-worker ./worker
+  # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
+  # Take those images and push them to docker hub
   - docker push umadev2022/multi-client
   - docker push umadev2022/multi-nginx
   - docker push umadev2022/multi-server
   - docker push umadev2022/multi-worker
-
